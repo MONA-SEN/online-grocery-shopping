@@ -1,0 +1,40 @@
+// ProductSearch component (ProductSearch.js)
+import React, { useState } from 'react';
+
+const ProductSearch = ({ onSearch, onFilter }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const handleSearch = () => {
+    onSearch(searchQuery);
+  };
+
+  const handleFilter = () => {
+    onFilter(selectedCategory);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Search products"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
+
+      <select
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+      >
+        <option value="">All Categories</option>
+        <option value="fruits">Fruits</option>
+        <option value="vegetables">Vegetables</option>
+        {/* Add more categories as needed */}
+      </select>
+      <button onClick={handleFilter}>Apply Filter</button>
+    </div>
+  );
+};
+
+export default ProductSearch;

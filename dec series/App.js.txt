@@ -1,0 +1,92 @@
+// App.js
+import React, { useState } from 'react';
+import AuthComponent from './AuthComponent';
+import ProductListings from './ProductListings';
+import ShoppingCart from './ShoppingCart';
+import Checkout from './Checkout';
+import PaymentGateway from './PaymentGateway';
+import OrderHistory from './OrderHistory';
+import ProductSearch from './ProductSearch';
+
+const App = () => {
+  // Placeholder data (replace with actual data from your backend)
+  const products = [
+    { id: 1, name: 'Apple', description: 'Fresh red apple', price: 2.5, image: 'apple.jpg' },
+    { id: 2, name: 'Banana', description: 'Yellow banana', price: 1.5, image: 'banana.jpg' },
+    // Add more products
+  ];
+
+  const [user, setUser] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [searchedProducts, setSearchedProducts] = useState([]);
+
+  const handleLogin = (userData) => {
+    // Implement login logic and set the user state
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    // Implement logout logic and reset the user state
+    setUser(null);
+  };
+
+  const handleCheckout = (checkoutData) => {
+    // Implement checkout logic (e.g., send data to backend, update order history)
+    // Clear the shopping cart after successful checkout
+    setCartItems([]);
+    // Add the order to the order history
+    setOrders([...orders, checkoutData]);
+    // Move to the next step (optional)
+    // setStep(3);
+  };
+
+  const handleSearch = (query) => {
+    // Implement search logic and update the searchedProducts state
+    const results = products.filter((product) =>
+      product.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setSearchedProducts(results);
+  };
+
+  const handleFilter = (category) => {
+    // Implement filter logic and update the searchedProducts state
+    const results = products.filter((product) =>
+      category ? product.category === category : true
+    );
+    setSearchedProducts(results);
+  };
+
+  return (
+    <div>
+      {!user ? (
+        <AuthComponent onLogin={handleLogin} />
+      ) : (
+        <div>
+          <h1>Welcome, {user.name}!</h1>
+          <button onClick={handleLogout}>Logout</button>
+
+          <ProductSearch onSearch={handleSearch} onFilter={handleFilter} />
+
+          <ProductListings products={searchedProducts.length > 0 ? searchedProducts : products} />
+
+          <ShoppingCart
+            cartItems={cartItems}
+            onAdd={(item) => setCartItems([...cartItems, item])}
+            onRemove={(item) =>
+              setCartItems(cartItems.filter((cartItem) => cartItem.id !== item.id))
+            }
+          />
+
+          <Checkout cartItems={cartItems} onCheckout={handleCheckout} />
+
+          <PaymentGateway onPayment={() => console.log('Payment successful!')} />
+
+          <OrderHistory orders={orders} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;

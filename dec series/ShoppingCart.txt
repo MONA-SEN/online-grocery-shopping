@@ -1,0 +1,32 @@
+User 
+// Authentication component (AuthComponent.js)
+import React, { useState } from 'react';
+
+const AuthComponent = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    // Add login logic here
+  };
+
+  const handleRegister = () => {
+    // Add registration logic here
+  };
+
+  const handleForgotPassword = () => {
+    // Add forgot password logic here
+  };
+
+  return (
+    <div>
+      <input type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleRegister}>Register</button>
+      <button onClick={handleForgotPassword}>Forgot Password</button>
+    </div>
+  );
+};
+
+export default AuthComponent;

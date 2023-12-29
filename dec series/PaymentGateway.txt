@@ -1,0 +1,21 @@
+// PaymentGateway component (PaymentGateway.js)
+import React from 'react';
+
+const PaymentGateway = ({ onPayment }) => {
+  // Integrate your payment gateway logic here
+  const handlePayment = () => {
+    // Implement payment processing logic
+    // You might use an external library or API for this
+    // Once payment is successful, trigger the onPayment callback
+    onPayment();
+  };
+
+  return (
+    <div>
+      {/* Include payment gateway UI or redirect to external payment page */}
+      <button onClick={handlePayment}>Complete Payment</button>
+    </div>
+  );
+};
+
+export default PaymentGateway;
